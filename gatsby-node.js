@@ -16,13 +16,32 @@ const path = require("path")
 exports.createPages = ({ graphql, actions }) => {
   // createPage is a method on the actions object passed in
   const { createPage } = actions
-  // links the path to the component!
-  createPage({
-    path: "/somefakepage",
-    component: path.resolve("./src/components/postLayout.js"),
-  })
-  createPage({
-    path: "/secondfakepage",
-    component: path.resolve("./src/components/postLayout.js"),
+
+  return new Promise((resolve, reject) => {
+    graphql(`
+      {
+        allMarkdownRemark {
+          edges {
+            node {
+              frontmatter {
+                slug
+              }
+            }
+          }
+        }
+      }
+    `).then(results => {
+      results.data.allMarkdownRemark.edges.forEach(({ node }) => {
+        // links the path to the component!
+        createPage({
+          path: `/posts${node.frontmatter.slug}`,
+          component: path.resolve("./src/components/postLayout.js"),
+          context: {
+            slug: node.frontmatter.slug,
+          },
+        })
+        resolve()
+      })
+    })
   })
 }

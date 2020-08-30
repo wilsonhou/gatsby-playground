@@ -8,10 +8,20 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
+import Img from "gatsby-image"
+import styled from "styled-components"
 
 import Header from "./header"
 import Archive from "./archive"
 import "./layout.css"
+
+const MainLayout = styled.main`
+  max-width: 90%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  grid-gap: 40px;
+`
 
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
@@ -20,6 +30,13 @@ const Layout = ({ children }) => {
         siteMetadata {
           title
           description
+        }
+      }
+      file(relativePath: { regex: "/bg/" }) {
+        childImageSharp {
+          fluid(maxWidth: 1000) {
+            ...GatsbyImageSharpFluid_tracedSVG
+          }
         }
       }
     }
@@ -35,8 +52,12 @@ const Layout = ({ children }) => {
           padding: `0 1.0875rem 1.45rem`,
         }}
       >
-        <main>{children}</main>
-        <Archive />
+        <Img fluid={data.file.childImageSharp.fluid} />
+        <MainLayout>
+          <div>{children}</div>
+          <Archive />
+        </MainLayout>
+
         <footer>
           © {new Date().getFullYear()}, Built with
           {` `}
