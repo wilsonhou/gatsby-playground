@@ -3,6 +3,7 @@ module.exports = {
     title: `Wilson's Blog Test`,
     description: `Testing Blog for Wilson`,
     author: `Wilson Hou`,
+    siteUrl: `https://romantic-perlman-e95b19.netlify.app`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -15,15 +16,16 @@ module.exports = {
       },
     },
     `gatsby-transformer-sharp`,
+    `gatsby-plugin-sitemap`,
     `gatsby-plugin-sharp`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `gatsby-starter-default`,
-        short_name: `starter`,
+        name: `Gatsby Playground`,
+        short_name: `playground`,
         start_url: `/`,
-        background_color: `#663399`,
-        theme_color: `#663399`,
+        background_color: `#524763`,
+        theme_color: `#524763`,
         display: `minimal-ui`,
         icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
       },
@@ -36,8 +38,8 @@ module.exports = {
       },
     }, // To learn more, visit: https://gatsby.dev/offline // this (optional) plugin enables Progressive Web App + Offline functionality
     `gatsby-transformer-remark`,
+    `gatsby-plugin-offline`,
     `gatsby-plugin-netlify-cms`,
     `gatsby-plugin-netlify`,
-    // `gatsby-plugin-offline`,
   ],
 }
