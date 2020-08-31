@@ -36,6 +36,8 @@ module.exports = {
       },
     }, // To learn more, visit: https://gatsby.dev/offline // this (optional) plugin enables Progressive Web App + Offline functionality
     `gatsby-transformer-remark`,
+    `gatsby-plugin-netlify-cms`,
+    `gatsby-plugin-netlify`,
     // `gatsby-plugin-offline`,
   ],
 }
