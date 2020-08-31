@@ -8,6 +8,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
+import { Spring } from "react-spring/renderprops"
 import Img from "gatsby-image"
 import styled from "styled-components"
 
@@ -23,7 +24,7 @@ const MainLayout = styled.main`
   grid-gap: 40px;
 `
 
-const Layout = ({ children }) => {
+const Layout = ({ children, location }) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -45,6 +46,18 @@ const Layout = ({ children }) => {
   return (
     <>
       <Header siteTitle={data.site.siteMetadata.title} />
+      <Spring
+        from={{ height: location.pathname === "/" ? 100 : 200 }}
+        to={{ height: location.pathname === "/" ? 200 : 100 }}
+      >
+        {styles => (
+          <div style={{ ...styles, overflow: "hidden" }}>
+            <Img fluid={data.file.childImageSharp.fluid} />
+          </div>
+        )}
+      </Spring>
+      {/* {location.pathname === "/" && (
+      )} */}
       <div
         style={{
           margin: `0 auto`,
@@ -52,7 +65,6 @@ const Layout = ({ children }) => {
           padding: `0 1.0875rem 1.45rem`,
         }}
       >
-        <Img fluid={data.file.childImageSharp.fluid} />
         <MainLayout>
           <div>{children}</div>
           <Archive />
@@ -70,6 +82,10 @@ const Layout = ({ children }) => {
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
+}
+
+Layout.defaultProps = {
+  location: {},
 }
 
 export default Layout

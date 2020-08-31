@@ -5,10 +5,10 @@ import Layout from "./layout"
 // Static Query is everywhere. Doesn't accept parameters!
 // Page Query accepts variables and uses context, but must be used on pages!
 
-const PostLayout = ({ data }) => {
+const PostLayout = ({ data, location }) => {
   const { markdownRemark } = data
   return (
-    <Layout>
+    <Layout location={location}>
       <h1>{markdownRemark.frontmatter.title}</h1>
       <div
         dangerouslySetInnerHTML={{
